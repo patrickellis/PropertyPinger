@@ -14,7 +14,7 @@ A web scraper bot to search for new web listings that match a set of filters and
 Follow the instructions [here](https://realpython.com/how-to-make-a-discord-bot-python/) to create a bot and add it to a discord server. (10 minutes est.) 
 
 ## Config 
-There are a set of Constants that you can configure to change the behaviour of the bot, most important ones:
+There are a set of Constants that you can configure to change the behaviour of the bot, here are the most important ones:
 * POST_DELAY (Default 30) - the time (in seconds) between posts to discord, I've set it to 30 to avoid the bot being timed out but you can experiment with making it lower
 * SEARCH_INTERVAL (Default 300) - the time (in seconds) between scrapes of the rightmove links in **SCRAPES**. Searching every 5 minutes has worked well for me. 
 

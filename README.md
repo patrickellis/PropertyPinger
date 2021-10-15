@@ -1,5 +1,5 @@
 # PropertyPinger
-A web scraper bot to search for new web listings that match a set of filters and pings a given discord channel
+A web scraper bot to search for new web listings that match a set of filters and sends pings to a given discord channel
 
 ## How to use
 * edit the SCRAPES constant variable in the bot.py file

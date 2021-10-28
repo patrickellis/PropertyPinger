@@ -33,9 +33,14 @@ SCRAPES = [
 
 
 def write_to_file(file, items):
+    """Write scraped links to a file so that they will not be pinked even
+    between multiple runs of the program.
+    Args:
+        file (str) : file to be written to
+        items (list(str)) : links to be written.
+    """
     if not items:
         return
-    print("Writing new links to file...")
     with open(file, 'a+') as f:
         for item in items:
             f.write("%s\n" % item)
@@ -45,6 +50,10 @@ def scrape(url):
     return rm.get_results['url'].tolist()
 
 def make_post(url):
+    """Makes HTTP post request to discord channel. Posts given URL.
+    Args:
+        url (str) : url to post
+    """
     global LASTCALL
     currentTime = datetime.today()
     if((currentTime - LASTCALL).total_seconds() < POST_DELAY):
@@ -59,7 +68,11 @@ def make_post(url):
     r = requests.post(baseURL, headers = headers, data = POSTedJSON)
 
 
-def rightmove_scrape(locations):
+def rightmove_scrape(properties):
+    """Scrapes rightmove based on the queries in SCRAPES.
+    Args:
+        properties (set(str)) : set of links that have been posted already.
+    """
     newlinks = []
     for target in SCRAPES:
         results = scrape(target)

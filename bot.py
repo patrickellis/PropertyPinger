@@ -21,13 +21,16 @@ NUM_ITERATIONS = 300
 SEARCH_INTERVAL = 300
 POST_DELAY = 30
 LASTCALL = datetime.today() - timedelta(hours=0, minutes=60) # last discord post time stored to avoid having requests rejected
+
 #search queries to scrape on RIGHTMOVE
 SCRAPES = [
-"https://www.rightmove.co.uk/property-to-rent/find.html?locationIdentifier=REGION%5E85314&maxBedrooms=3&minBedrooms=3&maxPrice=2750&minPrice=1750&radius=0.5&propertyTypes=&maxDaysSinceAdded=1&includeLetAgreed=false&mustHave=&dontShow=&furnishTypes=&keywords=",
-"https://www.rightmove.co.uk/property-to-rent/find.html?locationIdentifier=REGION%5E85314&maxBedrooms=3&minBedrooms=3&maxPrice=2750&minPrice=1750&radius=0.5&propertyTypes=&maxDaysSinceAdded=1&includeLetAgreed=false&mustHave=&dontShow=&furnishTypes=&keywords=",
-"https://www.rightmove.co.uk/property-to-rent/find.html?locationIdentifier=REGION%5E85244&maxBedrooms=3&minBedrooms=3&maxPrice=2750&minPrice=1750&radius=0.5&propertyTypes=&maxDaysSinceAdded=1&includeLetAgreed=false&mustHave=&dontShow=&furnishTypes=&keywords=",
-"https://www.rightmove.co.uk/property-to-rent/find.html?locationIdentifier=REGION%5E87492&maxBedrooms=3&minBedrooms=3&maxPrice=2750&minPrice=1750&radius=0.5&propertyTypes=&maxDaysSinceAdded=1&includeLetAgreed=false&mustHave=&dontShow=&furnishTypes=&keywords="
+    "https://www.rightmove.co.uk/property-to-rent/find.html?locationIdentifier=REGION%5E85314&maxBedrooms=3&minBedrooms=3&maxPrice=2750&minPrice=1750&radius=0.5&propertyTypes=&maxDaysSinceAdded=1&includeLetAgreed=false&mustHave=&dontShow=&furnishTypes=&keywords=",
+    "https://www.rightmove.co.uk/property-to-rent/find.html?locationIdentifier=REGION%5E85314&maxBedrooms=3&minBedrooms=3&maxPrice=2750&minPrice=1750&radius=0.5&propertyTypes=&maxDaysSinceAdded=1&includeLetAgreed=false&mustHave=&dontShow=&furnishTypes=&keywords=",
+    "https://www.rightmove.co.uk/property-to-rent/find.html?locationIdentifier=REGION%5E85244&maxBedrooms=3&minBedrooms=3&maxPrice=2750&minPrice=1750&radius=0.5&propertyTypes=&maxDaysSinceAdded=1&includeLetAgreed=false&mustHave=&dontShow=&furnishTypes=&keywords=",
+    "https://www.rightmove.co.uk/property-to-rent/find.html?locationIdentifier=REGION%5E87492&maxBedrooms=3&minBedrooms=3&maxPrice=2750&minPrice=1750&radius=0.5&propertyTypes=&maxDaysSinceAdded=1&includeLetAgreed=false&mustHave=&dontShow=&furnishTypes=&keywords=",
+    "https://www.rightmove.co.uk/property-to-rent/find.html?locationIdentifier=REGION%5E85329&maxBedrooms=4&minBedrooms=3&maxPrice=3000&minPrice=1750&radius=0.5&propertyTypes=&maxDaysSinceAdded=3&includeLetAgreed=false&mustHave=&dontShow=&furnishTypes=&keywords="
 ]
+
 
 def write_to_file(file, items):
     if not items:
@@ -39,7 +42,6 @@ def write_to_file(file, items):
 
 def scrape(url):
     rm = RightmoveData(url)
-    #print(rm.get_results['url'].tolist())
     return rm.get_results['url'].tolist()
 
 def make_post(url):
@@ -52,24 +54,20 @@ def make_post(url):
     headers = { "Authorization":"Bot {}".format(TOKEN),
             "User-Agent":"myBotThing (http://some.url, v0.1)",
             "Content-Type":"application/json", }
-
     message = url
     POSTedJSON =  json.dumps ( {"content":message} )
     r = requests.post(baseURL, headers = headers, data = POSTedJSON)
 
 
-def rightmove_scrape(locations, counter, properties):
-    print("scraping...")
+def rightmove_scrape(locations):
     newlinks = []
-    for location in locations.keys():
-        counter = len(properties)
-        results = scrape(locations[location])
+    for target in SCRAPES:
+        results = scrape(target)
         for result in results:
             if result not in properties:
                 properties.add(result)
                 newlinks.append(result)
                 make_post(result)
-        print("Found {} new results for {}".format(len(properties)-counter,location))
     write_to_file(RIGHTMOVE_FILE,newlinks)
 
 if __name__ == '__main__':
@@ -79,9 +77,8 @@ if __name__ == '__main__':
         lines = file.readlines()
         links = [line.rstrip() for line in lines]
     properties = set(links)
-    locations = {'Acton' : SCRAPES[0], 'Ealing' : SCRAPES[1], 'Putney' : SCRAPES[2], 'Battersea' : SCRAPES[3]}
 
     # main driver
     for iteration in range(NUM_ITERATIONS):
-        rightmove_scrape(locations,len(locations),properties)
+        rightmove_scrape(properties)
         time.sleep(SEARCH_INTERVAL)

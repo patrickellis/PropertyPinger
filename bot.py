@@ -85,7 +85,7 @@ def rightmove_scrape(properties):
     write_to_file(RIGHTMOVE_FILE,newlinks)
 
 if __name__ == '__main__':
-    print("starting program...")
+    print("###### Starting bot... ######")
     links = None
     with open(RIGHTMOVE_FILE) as file:
         lines = file.readlines()

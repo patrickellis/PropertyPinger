@@ -20,7 +20,8 @@ ZOOPLA_FILE = os.getenv('ZOOPLA_FILE')
 NUM_ITERATIONS = 300
 SEARCH_INTERVAL = 300
 POST_DELAY = 30
-LASTCALL = datetime.today() - timedelta(hours=0, minutes=60) # last discord post time stored to avoid having requests rejected
+LASTCALL = datetime.today() - timedelta(hours=0, minutes=60)
+# last discord post time stored to avoid having requests rejected
 
 #search queries to scrape on RIGHTMOVE
 SCRAPES = [

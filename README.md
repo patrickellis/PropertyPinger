@@ -8,6 +8,7 @@ A web scraper bot to search for new web listings that match a set of filters and
 * edit the SCRAPES constant variable in the bot.py file
 * to generate a link that is appropriate for your search, go to rightmove.co.uk and enter a location and select a set of filters, press search and copy this URL into **SCRAPES**
 * create yourself a bot on the [discord developer portal](https://discord.com/developers/docs/intro)
+* edit the .env file with your discord bot token, target channel id, and server name (GUILD)
 * run the bot.py file, or host it on a VM for 24/7 script operation
 
 ## How to find your Discord Channel Token

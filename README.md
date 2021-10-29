@@ -9,7 +9,7 @@ A web scraper bot to search for new web listings that match a set of filters and
 * to generate a link that is appropriate for your search, go to rightmove.co.uk and enter a location and select a set of filters, press search and copy this URL into **SCRAPES**
 * create yourself a bot on the [discord developer portal](https://discord.com/developers/docs/intro)
 * run the bot.py file, or host it on a VM for 24/7 script operation
-*
+
 ## How to find your Discord Channel Token
 * enable developer mode on your discord app (Settings -> Advanced -> Developer Mode)
 * right click on the channel you want to send pings to -> Copy ID

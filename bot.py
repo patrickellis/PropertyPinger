@@ -2,11 +2,9 @@
 import os
 import requests
 import json
-import discord
 from dotenv import load_dotenv
 from RightmoveData import RightmoveData
 import pandas as pd
-from IPython.display import display
 import time
 from datetime import datetime, timedelta
 
